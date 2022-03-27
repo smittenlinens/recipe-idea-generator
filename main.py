@@ -66,12 +66,9 @@ def post_recipeideas(food_name: str, recipe_idea: Recipeideas):
 
     raise HTTPException(status_code = 200, detail = "You have successfully added this new recipe idea.")
 
-#@app.put("/update-recipe-ideas/{food_name}")
-#def update_recipe_ideas(food_name: str, recipe_idea: Updateideas):
-    
+
 @app.delete("/delete-outdated-recipe-ideas/{food_name}")
 def delete_recipeideas(food_name: str, recipe_idea: Recipeideas):
-    # RECIPE_IDEAS[food_name.delete(recipe_idea.name)]
     RECIPE_IDEAS[food_name].remove(recipe_idea.name)
     return {"You have successfully deleted this unwanted recipe idea."}
 
