@@ -11,7 +11,6 @@ def load_image(image_file):
 def main():
     st.title('Recipe Idea Generator')
 
-    # menus = ["Japchae", "Burrito Wrap"]
 	
     # choice = st.sidebar.selectbox("Menu", menus)
 
