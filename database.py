@@ -1,6 +1,8 @@
 from pymongo import MongoClient
+from bson import ObjectId
 
 
+#The recipe here refers to database, not collection
 client = MongoClient("mongodb://localhost:27017")
 db = client.recipe
 
@@ -28,4 +30,19 @@ def db_update_recipe(food_name, recipe):
             "$set": {"recipe": recipe}
         }
     )
+
+
+def db_get_inventory(food_item):
+    recipe = db["inventory"].find_one({"_id": ObjectId("6245590b80b4512dc22718ac")})
+
+def db_update_inventory(food_item):
+    db["inventory"].update_one(
+        {
+            "_id": ObjectId("6245590b80b4512dc22718ac")
+        },
+        {
+            "$set": {"inventory": food_item}
+        }
+    )
+
 

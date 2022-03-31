@@ -62,7 +62,6 @@ def post_recipeideas(food_name: str, recipe_idea: Recipeideas):
 
         # Update DB document
         database.db_update_recipe(food_name, recipe["recipe"])
-    
     # Food doesn't exists
     else:
         # Create new recipe DB document
@@ -77,6 +76,13 @@ def post_recipeideas(food_name: str, recipe_idea: Recipeideas):
 
 @router.delete("/delete-outdated-recipe-ideas/{food_name}")
 def delete_recipeideas(food_name: str, recipe_idea: Recipeideas):
-    RECIPE_IDEAS[food_name].remove(recipe_idea.name)
-    return {"You have successfully deleted this unwanted recipe idea."}
+    recipe = database.db_get_recipe(food_name)
+    if recipe:
+        if recipe_idea.name not in recipe["recipe"]:
+            raise HTTPException(status_code = 400, detail = "This recipe idea does not exist.")
+        recipe["recipe"].delete(recipe_idea.name)
+
+        database.db_update_recipe(food_name, recipe["recipe"])
+    else:
+        raise HTTPException(status_code = 400, detail = "This food item does not exist.")
 

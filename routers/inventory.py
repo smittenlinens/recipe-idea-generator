@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Path, Query, status, HTTPException
 from pydantic import BaseModel
+import database
 
 
 router = APIRouter()
@@ -29,8 +30,11 @@ def post_newfooditem(food_item: FridgeInventory):
 
 @router.delete("/delete-used-up-food")
 def delete_usedfood(food_item: FridgeInventory):
-    if food_item.name not in INVENTORY:
-         raise HTTPException(status_code = 400, detail = "This food item does not exist in your inventory.")
+    inventory = database.db_get_inventory(food_item)
+    if food_item.name not in inventory["inventory"]:
+         raise HTTPException(status_code = 400, detail = "This food item does not exist in your inventory.")   
     else:
-        INVENTORY.remove(food_item.name)
+        inventory["inventory"].delete(food_item.name)
         return {"You have successfully deleted this used food from your inventory."}
+
+#Pending. Have not properly change inventory section
