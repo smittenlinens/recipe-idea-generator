@@ -32,8 +32,11 @@ def db_update_recipe(food_name, recipe):
     )
 
 
-def db_get_inventory(food_item):
-    recipe = db["inventory"].find_one({"_id": ObjectId("6245590b80b4512dc22718ac")})
+def db_get_inventory():
+    inventory = db["inventory"].find_one({
+        "_id": ObjectId("6245590b80b4512dc22718ac")
+    })
+    return inventory["inventory"]
 
 def db_update_inventory(food_item):
     db["inventory"].update_one(
