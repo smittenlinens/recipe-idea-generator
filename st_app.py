@@ -99,7 +99,7 @@ def main():
 
 
 def main2():
-    response = requests.get("http://localhost:8000/recipes")
+    response = requests.get("http://localhost:8000/get-recipe-ideas/chicken")
     print('response: ', response.status_code)
     print('response: ', response.json())
 
