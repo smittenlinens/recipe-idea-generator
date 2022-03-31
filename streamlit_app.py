@@ -14,5 +14,9 @@ def main():
     image = Image.open("fridge-organization.jpg")
     st.image(image, caption = 'Generating recipe ideas')
 
+    response = requests.get(f"http://localhost:8000/get-recipe-ideas/{text_input}")
+    print('response: ', response.status_code)
+    print('response: ', response.json())
+
 if __name__ == "__main__":
     main()
