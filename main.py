@@ -12,7 +12,7 @@ def home():
 
 @app.get("/about")
 def about():
-    return {"message": "This API helps you to generate recipe ideas based on the items you have in your fridge. You can add new food items and delete outdated recipe ideas too."}
+    return {"message": "This API helps you to generate recipe ideas based on the items you have in your fridge. You can manage your fridge inventory too."}
 
 
 app.include_router(recipe.router)
