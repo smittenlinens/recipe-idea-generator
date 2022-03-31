@@ -44,5 +44,3 @@ def delete_usedfood(food_item: FridgeInventory):
         database.db_update_inventory(inventory)
         raise HTTPException(status_code = 200, detail = "You have successfully deleted this used food from your inventory.")
         
-
-#Pending. Have not properly change inventory section
