@@ -19,7 +19,7 @@ def get_inventory():
     return {"inventory": inventory}
 
 
-@router.post("/create-new-food-items")
+@router.post("/create-new-food-items/{food_name}")
 def post_newfooditem(food_item: FridgeInventory):
     #search for existing food in fridge
     inventory = database.db_get_inventory()

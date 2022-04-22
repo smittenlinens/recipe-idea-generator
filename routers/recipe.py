@@ -9,31 +9,6 @@ router = APIRouter()
 class Recipeideas(BaseModel):
     name: str
 
-#class Updateideas(BaseModel):
-    #name: str
-    #recipe: List[str]
-
-
-#class Recipe(BaseModel):
-    #name: str
-    #recipe: List[str]
-
-
-# RECIPE_IDEAS = {
-#     "chicken": ["Chicken Burrito Wrap", 
-#         "Japanese Cream Pasta", 
-#         "Pesto Chicken Toastie", 
-#         "Oyakodon"],
-#     "shiitake mushrooms": ["japchae"],
-#     "banana": ["oatmeal", "pancakes"],
-#     "oats": ["cocoa coffee overnight oats", "banana pancakes", "granola", "warm oatmeals"],
-#     "mushrooms": ["Japanese Cream Pasta", "Western Cream Pasta"],
-#     "tomato": ["tik tok pasta", "foccacia", "shashuka", "pico de gallo", "guacamole"],
-#     "cabbage": ["okonomiyaki", "egg mayo sandwich"],
-#     "tofu": ["cold tofu w/ kimchi", "kimchi jiggae", "air-fried tofu"],
-#     "kimchi": ["kimchi fried rice", "okonomiyaki", "kimchi jiggae", "pork lard rice w/ poached egg & edamame", "cold tofu"]
-# }
-
 
 @router.get("/get-recipe-ideas/{food_name}")
 def get_recipeideas(food_name: str = Path(None, description = "Insert the food you have that you want a recipe idea of.")):
@@ -69,7 +44,7 @@ def post_recipeideas(food_name: str, recipe_idea: Recipeideas):
             "name": food_name,
             "recipe": [recipe_idea.name]
         }
-        database.db_insert_recipe()
+        database.db_insert_recipe(recipe)
     
     raise HTTPException(status_code = 200, detail = "You have successfully added this new recipe idea.")
 
@@ -80,7 +55,7 @@ def delete_recipeideas(food_name: str, recipe_idea: Recipeideas):
     if recipe:
         if recipe_idea.name not in recipe["recipe"]:
             raise HTTPException(status_code = 400, detail = "This recipe idea does not exist.")
-        recipe["recipe"].delete(recipe_idea.name)
+        recipe["recipe"].remove(recipe_idea.name)
 
         database.db_update_recipe(food_name, recipe["recipe"])
     else:
