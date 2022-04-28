@@ -54,10 +54,11 @@ def delete_recipeideas(food_name: str, recipe_idea: Recipeideas):
     recipe = database.db_get_recipe(food_name)
     if recipe:
         if recipe_idea.name not in recipe["recipe"]:
-            raise HTTPException(status_code = 400, detail = "This recipe idea does not exist.")
-        recipe["recipe"].remove(recipe_idea.name)
-
-        database.db_update_recipe(food_name, recipe["recipe"])
+            raise HTTPException(status_code = 304, detail = "This recipe idea does not exist.")
+        else:
+            recipe["recipe"].remove(recipe_idea.name)
+            database.db_update_recipe(food_name, recipe["recipe"])
+            raise HTTPException(status_code = 200, detail = "You have successfully deleted this recipe idea.")
     else:
-        raise HTTPException(status_code = 400, detail = "This food item does not exist.")
+        return None
 
